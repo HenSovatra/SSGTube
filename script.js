@@ -83,7 +83,7 @@ fetch("videos.json")
         const img = document.createElement("img");
 
         // 👇 map artist name to image file
-        img.src = `artists/${name}.jpg`; // example: artists/Chetra.jpg
+        img.src = `artists/${name.toLowerCase()}.jpg`; // example: artists/Chetra.jpg
 
         avatarWrapper.appendChild(img);
       });
@@ -107,7 +107,7 @@ fetch("videos.json")
         <div style="padding-left:15px" >
           <h4 style="padding-bottom:5px;">${video.title}</h4>
           <span>${(Array.isArray(video.artist) && video.artist.length > 0 ? video.artist.join(" & ") : "")}</span>
-          <span >${video.duration??"0:00"}</span>
+          <span >${video.duration ?? "0:00"}</span>
         </div>
       `;
 
