@@ -4,6 +4,7 @@ const videoList = document.getElementById("videoList");
 
 let videos = [];
 let currentIndex = 0;
+let videoItems = [];
 
 // Load saved index (if exists)
 const savedIndex = localStorage.getItem("currentIndex");
@@ -16,14 +17,61 @@ fetch("videos.json")
     function loadVideo(index) {
       currentIndex = index;
 
-      // 🔥 SAVE INDEX
       localStorage.setItem("currentIndex", index);
 
       const video = videos[index];
+
       videoPlayer.src = video.src;
       videoTitle.innerText = video.title;
 
       videoPlayer.play();
+
+      // 🔥 MEDIA SESSION (THIS IS THE KEY)
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: video.title,
+          artist: "SSGTube",
+          album: "Local Playlist",
+          artwork: [
+            { src: video.thumbnail, sizes: "96x96", type: "image/png" },
+            { src: video.thumbnail, sizes: "192x192", type: "image/png" },
+            { src: video.thumbnail, sizes: "512x512", type: "image/png" }
+          ]
+        });
+
+        // Optional controls
+        navigator.mediaSession.setActionHandler("play", () => {
+          videoPlayer.play();
+        });
+
+        navigator.mediaSession.setActionHandler("pause", () => {
+          videoPlayer.pause();
+        });
+
+        navigator.mediaSession.setActionHandler("nexttrack", () => {
+          let next = currentIndex + 1;
+          if (next >= videos.length) next = 0;
+          loadVideo(next);
+        });
+
+        navigator.mediaSession.setActionHandler("previoustrack", () => {
+          let prev = currentIndex - 1;
+          if (prev < 0) prev = videos.length - 1;
+          loadVideo(prev);
+        });
+      }
+      // 🔥 HIGHLIGHT CURRENT VIDEO
+      videoItems.forEach(item => item.classList.remove("active"));
+
+      if (videoItems[index]) {
+        videoItems[index].classList.add("active");
+
+        // optional: auto scroll to active
+        videoItems[index].scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
     }
 
     // Render list
@@ -33,14 +81,16 @@ fetch("videos.json")
 
       item.innerHTML = `
         <img src="${video.thumbnail}">
-        <div>
-          <h4>${video.title}</h4>
+        <div style="padding-left:15px" >
+          <h4 style="padding-bottom:5px;">${video.title}</h4>
+          <span >${video.duration??"0:00"}</span>
         </div>
       `;
 
       item.onclick = () => loadVideo(index);
 
       videoList.appendChild(item);
+      videoItems.push(item);
     });
 
     // 🔥 AUTO NEXT
@@ -66,23 +116,23 @@ const toggleBtn = document.getElementById("themeToggle");
 const logo = document.getElementById("logo");
 // Load saved theme
 if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    toggleBtn.innerText = "☀️";
-    logo.src = "logo-dark.png";
+  document.body.classList.add("dark");
+  toggleBtn.innerHTML = '<i class="bi bi-brightness-high"></i>';
+  logo.src = "logo-dark.png";
 }
 
 // Toggle theme
 toggleBtn.onclick = () => {
-    document.body.classList.toggle("dark");
+  document.body.classList.toggle("dark");
 
-    if (document.body.classList.contains("dark")) {
+  if (document.body.classList.contains("dark")) {
 
-        localStorage.setItem("theme", "dark");
-        toggleBtn.innerText = "☀️";
-        logo.src = "logo-dark.png";
-    } else {
-        localStorage.setItem("theme", "light");
-        toggleBtn.innerText = "🌙";
-        logo.src = "logo.png";
-    }
+    localStorage.setItem("theme", "dark");
+    toggleBtn.innerHTML = '<i class="bi bi-brightness-high"></i>';
+    logo.src = "logo-dark.png";
+  } else {
+    localStorage.setItem("theme", "light");
+    toggleBtn.innerHTML = '<i class="bi bi-moon"></i>';
+    logo.src = "logo.png";
+  }
 };

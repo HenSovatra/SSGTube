@@ -148,3 +148,64 @@ video {
     font-size: 12px;
   }
 }
+.video-item {
+  position: relative;
+}
+
+.video-item.active {
+  background: var(--card);
+}
+
+/* 🔥 SSG Tube Gradient Border */
+.video-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+
+  background: linear-gradient(
+    to bottom,
+    #7b5cff,
+    #ff5fa2,
+    #ff7a45
+  );
+}
+
+.video-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+
+  background: linear-gradient(
+    180deg,
+    #7b5cff,
+    #ff5fa2,
+    #ff7a45,
+    #7b5cff   /* 🔁 repeat first color */
+  );
+
+  background-size: 100% 300%;
+  animation: ssgGradient 4s linear infinite;
+}
+
+@keyframes ssgGradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+.video-item span {
+  font-size: 12px;
+  opacity: 0.7;
+  display: block;
+  margin-top: 3px;
+}
