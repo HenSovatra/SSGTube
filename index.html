@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyTube</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <img id="logo" src="logo.png" width="50px">
+  <button id="themeToggle">🌙</button>
+</header>
+
+<div class="container">
+  
+  <div class="player" style="padding-left: 30px; padding-right: 30px;">
+    <video id="videoPlayer" controls autoplay></video>
+    <h3 id="videoTitle"></h3>
+  </div>
+
+  <div class="sidebar" id="videoList"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --card: #f0f0f0;
+  --border: #ddd;
+}
+
+body.dark {
+  --bg: #0f0f0f;
+  --text: #ffffff;
+  --card: #1f1f1f;
+  --border: #333;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#themeToggle {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: var(--text);
+}
+
+/* LAYOUT */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* PLAYER */
+.player {
+  flex: 3;
+  padding: 15px;
+}
+
+video {
+  width: 100%;
+  max-height: 65vh;
+  border-radius: 10px;
+  background: black;
+}
+
+/* SIDEBAR */
+.sidebar {
+  flex: 1;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+}
+
+/* VIDEO ITEM */
+.video-item {
+  display: flex;
+  cursor: pointer;
+  padding: 10px;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  transition: 0.2s;
+}
+
+.video-item:hover {
+  background: var(--card);
+}
+
+.video-item img {
+  width: 120px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.video-item h4 {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ========================= */
+/* 📱 MOBILE RESPONSIVE */
+/* ========================= */
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .player {
+    padding: 10px;
+  }
+
+  video {
+    max-height: 40vh;
+  }
+
+  .sidebar {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .video-item {
+    padding: 8px;
+  }
+
+  .video-item img {
+    width: 100px;
+    height: 60px;
+  }
+}
+
+/* ========================= */
+/* 📲 SMALL PHONES */
+/* ========================= */
+@media (max-width: 480px) {
+
+  header h2 {
+    font-size: 16px;
+  }
+
+  #themeToggle {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .video-item img {
+    width: 90px;
+    height: 55px;
+  }
+
+  .video-item h4 {
+    font-size: 12px;
+  }
+}
