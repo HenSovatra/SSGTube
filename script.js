@@ -1,6 +1,7 @@
 const videoPlayer = document.getElementById("videoPlayer");
 const videoTitle = document.getElementById("videoTitle");
 const videoList = document.getElementById("videoList");
+const artistContainer = document.getElementById("artistContainer");
 
 let videos = [];
 let currentIndex = 0;
@@ -72,6 +73,28 @@ fetch("videos.json")
           block: "center"
         });
       }
+      // 🔥 RENDER ARTISTS
+      artistContainer.innerHTML = "";
+
+      const avatarWrapper = document.createElement("div");
+      avatarWrapper.className = "artist-avatars";
+
+      video.artist.forEach(name => {
+        const img = document.createElement("img");
+
+        // 👇 map artist name to image file
+        img.src = `artists/${name}.jpg`; // example: artists/Chetra.jpg
+
+        avatarWrapper.appendChild(img);
+      });
+
+      // names: A & B
+      const names = document.createElement("div");
+      names.className = "artist-names";
+      names.innerText = video.artist.join(" & ");
+
+      artistContainer.appendChild(avatarWrapper);
+      artistContainer.appendChild(names);
     }
 
     // Render list
@@ -83,6 +106,7 @@ fetch("videos.json")
         <img src="${video.thumbnail}">
         <div style="padding-left:15px" >
           <h4 style="padding-bottom:5px;">${video.title}</h4>
+          <span>${(Array.isArray(video.artist) && video.artist.length > 0 ? video.artist.join(" & ") : "")}</span>
           <span >${video.duration??"0:00"}</span>
         </div>
       `;

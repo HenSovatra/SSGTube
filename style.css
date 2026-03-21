@@ -148,6 +148,7 @@ video {
     font-size: 12px;
   }
 }
+
 .video-item {
   position: relative;
 }
@@ -166,12 +167,10 @@ video {
   height: 100%;
   border-radius: 2px;
 
-  background: linear-gradient(
-    to bottom,
-    #7b5cff,
-    #ff5fa2,
-    #ff7a45
-  );
+  background: linear-gradient(to bottom,
+      #7b5cff,
+      #ff5fa2,
+      #ff7a45);
 }
 
 .video-item.active::before {
@@ -183,13 +182,13 @@ video {
   height: 100%;
   border-radius: 2px;
 
-  background: linear-gradient(
-    180deg,
-    #7b5cff,
-    #ff5fa2,
-    #ff7a45,
-    #7b5cff   /* 🔁 repeat first color */
-  );
+  background: linear-gradient(180deg,
+      #7b5cff,
+      #ff5fa2,
+      #ff7a45,
+      #7b5cff
+      /* 🔁 repeat first color */
+    );
 
   background-size: 100% 300%;
   animation: ssgGradient 4s linear infinite;
@@ -199,13 +198,57 @@ video {
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 0% 100%;
   }
 }
+
 .video-item span {
   font-size: 12px;
   opacity: 0.7;
   display: block;
   margin-top: 3px;
+}
+
+.artist-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.artist-avatars {
+  display: flex;
+  align-items: center;
+}
+
+/* stacked circles */
+.artist-avatars img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  object-fit: cover;
+  margin-left: -10px;
+}
+
+.artist-avatars img:first-child {
+  margin-left: 0;
+}
+
+.artist-names {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.desc-container {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 15px;
+  background-color: #333;
+  border-radius: 15px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 25px;
 }
