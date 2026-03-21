@@ -4,70 +4,101 @@
     "src": "videos/video1.mp4",
     "thumbnail": "videos/thumb1.jpg",
     "duration": "3:31",
-    "artist":["Chetra","Huy"]
+    "artist": [
+      "Chetra",
+      "Huy"
+    ]
   },
   {
     "title": "72 Hours - Vichetra ft. Votey",
     "src": "videos/video2.mp4",
     "thumbnail": "videos/thumb2.jpg",
     "duration": "4:24",
-    "artist":["Chetra","Votey"]
-  },  
+    "artist": [
+      "Chetra",
+      "Votey"
+    ]
+  },
   {
     "title": "7 Days a week - Vichetra ft. Votey",
     "src": "videos/video3.mp4",
     "thumbnail": "videos/thumb3.jpg",
     "duration": "4:27",
-    "artist":["Chetra","Votey"]
+    "artist": [
+      "Chetra",
+      "Votey"
+    ]
   },
   {
     "title": "អូនស្គាល់ចិត្តបង - Vichetra",
     "src": "videos/video4.mp4",
     "thumbnail": "videos/thumb4.jpg",
     "duration": "3:26",
-    "artist":["Chetra"]
+    "artist": [
+      "Chetra"
+    ]
   },
   {
     "title": "មិនអស់អាល័យ - Vichetra",
     "src": "videos/video5.mp4",
     "thumbnail": "videos/thumb5.jpg",
     "duration": "3:21",
-    "artist":["Chetra"]
+    "artist": [
+      "Chetra"
+    ]
   },
   {
     "title": "កង់សាគួរ - TeHuy",
     "src": "videos/video6.mp4",
     "thumbnail": "videos/thumb6.jpg",
     "duration": "4:31",
-    "artist":["Huy"]
+    "artist": [
+      "Huy"
+    ]
   },
   {
     "title": "First Love - Tehuy",
     "src": "videos/video7.mp4",
     "thumbnail": "videos/thumb7.jpg",
     "duration": "3:32",
-    "artist":["Huy"]
+    "artist": [
+      "Huy"
+    ]
   },
   {
     "title": "Waiting - Tehuy",
     "src": "videos/video8.mp4",
     "thumbnail": "videos/thumb8.jpg",
     "duration": "4:42",
-    "artist":["Huy"]
+    "artist": [
+      "Huy"
+    ]
   },
   {
     "title": "អង្រួន - VannLa",
     "src": "videos/video9.mp4",
     "thumbnail": "videos/thumb9.jpg",
     "duration": "5:08",
-    "artist":["Tola"]
+    "artist": [
+      "Tola"
+    ]
   },
   {
     "title": "Lost In Angkor - Chetra",
     "src": "videos/video10.mp4",
     "thumbnail": "videos/thumb10.jpg",
     "duration": "4:50",
-    "artist":["Chetra"]
+    "artist": [
+      "Chetra"
+    ]
+  },
+  {
+    "title": "Tong Hua - Chetra",
+    "src": "videos/video11.mp4",
+    "thumbnail": "videos/thumb11.jpg",
+    "duration": "4:06",
+    "artist": [
+      "Chetra"
+    ]
   }
-  
 ]
