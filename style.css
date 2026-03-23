@@ -52,7 +52,7 @@ header {
 }
 
 /* LAYOUT */
-.container {
+.containers {
   display: flex;
   height: calc(100vh - 60px);
 }
@@ -262,4 +262,71 @@ video {
   padding-left: 20px;
   padding-top: 5px;
   padding-bottom: 25px;
+}
+.search-box {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg);
+  border-radius: 25px;
+  padding: 5px 10px;
+  position: relative;
+  width: 100%;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  padding: 8px;
+  width: 100%;
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  color:  var(--text);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--bg);
+  border-radius: 10px;
+  margin-top: 5px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+  z-index: 999;
+}
+
+.search-item {
+  padding: 15px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-item:hover {
+  background: var(--card);
+}
+
+.search-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.my-nav{
+background-color: var(--card);
+padding: 15px;
 }

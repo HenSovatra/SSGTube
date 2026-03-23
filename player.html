@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSG Tube</title>
+  <link rel="icon" type="image/png" href="logo-dark.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container-fluid my-nav">
+        <div class="row">
+            <div class="col-2">
+                <img id="logo" src="logo.png" onclick="location.href='index.html'" style="cursor: pointer; width: 50px;">
+            </div>
+
+            <div class="col-10" style="display:flex; gap:10px">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search songs, artists..." autocomplete="off" />
+                    <button id="searchBtn"><i class="bi bi-search"></i></button>
+
+                    <div id="searchDropdown" class="search-dropdown"></div>
+                </div>
+                <button id="themeToggle"><i class="bi bi-moon"></i></button>
+            </div>
+        </div>
+    </div>
+
+<div class="container-fluid">
+  <div class="row">
+    
+    <!-- PLAYER -->
+    <div class="col-12 col-md-8">
+      <div class="player">
+        <video id="videoPlayer" controls autoplay></video>
+        <div class="desc-container">
+          <h3 id="videoTitle"></h3>
+          <div id="artistContainer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="col-12 col-md-4">
+      <div class="sidebar" id="videoList"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

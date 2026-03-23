@@ -7,13 +7,79 @@ let videos = [];
 let currentIndex = 0;
 let videoItems = [];
 
-// Load saved index (if exists)
-const savedIndex = localStorage.getItem("currentIndex");
 
 fetch("videos.json")
   .then(res => res.json())
   .then(data => {
     videos = data;
+    
+
+    let videoss = [];
+
+    $.getJSON("videos.json", function (data) {
+      videoss = data;
+    });
+
+
+    $("#searchInput").on("keyup", function () {
+      let keyword = $(this).val().toLowerCase();
+      let dropdown = $("#searchDropdown");
+
+      dropdown.empty();
+
+      if (keyword === "") {
+        dropdown.hide();
+        return;
+      }
+
+      let results = videoss.filter(v => {
+        let titleMatch = v.title.toLowerCase().includes(keyword);
+
+        let artistMatch = v.artist.some(a =>
+          a.toLowerCase().includes(keyword)
+        );
+
+        return titleMatch || artistMatch;
+      });
+
+      if (results.length === 0) {
+        dropdown.html("<div class='search-item'>No results</div>");
+        dropdown.show();
+        return;
+      }
+
+        results.slice(0, 6).forEach(v => {
+        let index = videoss.indexOf(v); // 🔑 get real index
+        let artists = v.artist.join(", ");
+
+        let item = `
+            <div class="search-item" data-index="${index}">
+            <img src="${v.thumbnail}">
+            <div>
+                <div>${v.title}</div>
+                <small>${artists}</small>
+            </div>
+            </div>
+        `;
+
+        dropdown.append(item);
+        });
+
+      dropdown.show();
+    });
+
+    $(document).on("click", ".search-item", function () {
+      let index = $(this).data("index");
+      loadVideo(index);
+        $("#searchDropdown").hide();
+    });
+
+
+    $(document).click(function (e) {
+      if (!$(e.target).closest(".search-box").length) {
+        $("#searchDropdown").hide();
+      }
+    });
 
     function loadVideo(index) {
       currentIndex = index;
@@ -111,7 +177,12 @@ fetch("videos.json")
         </div>
       `;
 
-      item.onclick = () => loadVideo(index);
+      item.onclick = () => {
+        loadVideo(index);
+
+        // 🔥 remove ?index from URL
+        window.history.replaceState({}, "", "player.html");
+      };
 
       videoList.appendChild(item);
       videoItems.push(item);
@@ -128,12 +199,21 @@ fetch("videos.json")
       loadVideo(nextIndex);
     });
 
-    // ✅ LOAD SAVED INDEX OR DEFAULT 0
-    if (savedIndex !== null && savedIndex < videos.length) {
-      loadVideo(parseInt(savedIndex));
-    } else {
-      loadVideo(0);
+    // ✅ NEW LOGIC (URL + localStorage)
+    const params = new URLSearchParams(window.location.search);
+    const indexFromURL = parseInt(params.get("index"));
+    const savedIndexParsed = parseInt(localStorage.getItem("currentIndex"));
+
+    let startIndex = 0;
+
+    if (!isNaN(indexFromURL)) {
+      startIndex = indexFromURL;
+    } else if (!isNaN(savedIndexParsed)) {
+      startIndex = savedIndexParsed;
     }
+
+    // 🔥 LOAD HERE (IMPORTANT)
+    loadVideo(startIndex);
   });
 
 const toggleBtn = document.getElementById("themeToggle");
