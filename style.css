@@ -330,3 +330,8 @@ video {
 background-color: var(--card);
 padding: 15px;
 }
+#artistContainer{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

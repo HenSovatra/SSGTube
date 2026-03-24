@@ -120,12 +120,75 @@
     ]
   },
   {
-    "title": "Love is Singular",
+    "title": "Love is Singular - Sovann",
     "src": "videos/video14.mp4",
     "thumbnail": "videos/thumb14.jpg",
     "duration": "5:05",
     "artist": [
       "Sovann"
+    ]
+  },
+  {
+    "title": "រាស្រ្ដសាមញ្ញ - Sovann",
+    "src": "videos/video15.mp4",
+    "thumbnail": "videos/thumb15.jpg",
+    "duration": "5:04",
+    "artist": [
+      "Sovann"
+    ]
+  },
+  {
+    "title": "មនុស្សល្អ - Sovann",
+    "src": "videos/video16.mp4",
+    "thumbnail": "videos/thumb16.jpg",
+    "duration": "4:53",
+    "artist": [
+      "Sovann"
+    ]
+  },
+  {
+    "title": "ពលី - Sovann",
+    "src": "videos/video17.mp4",
+    "thumbnail": "videos/thumb17.jpg",
+    "duration": "4:50",
+    "artist": [
+      "Sovann"
+    ]
+  },
+  {
+    "title": "Not Cute Anymore - Sreyoun",
+    "src": "videos/video18.mp4",
+    "thumbnail": "videos/thumb18.jpg",
+    "duration": "2:10",
+    "artist": [
+      "Sreyoun"
+    ]
+  },
+  {
+    "title": "Love Diary - Tola",
+    "src": "videos/video19.mp4",
+    "thumbnail": "videos/thumb19.jpg",
+    "duration": "4:11",
+    "artist": [
+      "Tola"
+    ]
+  },
+  {
+    "title": "Pano - Huy",
+    "src": "videos/video20.mp4",
+    "thumbnail": "videos/thumb20.jpg",
+    "duration": "4:35",
+    "artist": [
+      "Huy"
+    ]
+  },
+  {
+    "title": "Daddy Da(Tra) - Chetra",
+    "src": "videos/video21.mp4",
+    "thumbnail": "videos/thumb21.jpg",
+    "duration": "6:14",
+    "artist": [
+      "Chetra"
     ]
   }
 ]

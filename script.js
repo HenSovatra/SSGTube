@@ -134,10 +134,14 @@ fetch("videos.json")
         videoItems[index].classList.add("active");
 
         // optional: auto scroll to active
-        videoItems[index].scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
+        // videoItems[index].scrollIntoView({
+        //   behavior: "smooth",
+        //   block: "center"
+        // });
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
       }
       // 🔥 RENDER ARTISTS
       artistContainer.innerHTML = "";
