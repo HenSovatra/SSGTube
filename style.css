@@ -335,3 +335,53 @@ padding: 15px;
   align-items: center;
   gap: 10px;
 }
+
+
+.player-controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* base button */
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  border: 1px solid var(--border);
+  background: var(--card);
+
+  color:var(--text);
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* hover effect */
+.control-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color:var(--text);
+  transform: translateY(-1px);
+}
+
+/* active ON state */
+.control-btn.active {
+  background: linear-gradient(135deg,
+      #7b5cff,
+      #ff5fa2,
+      #ff7a45);
+  color: #fff;
+  border: none;
+
+  box-shadow: 0 0 10px #7b5cff;
+}
+
+/* icon size */
+.control-btn .icon {
+  font-size: 16px;
+}

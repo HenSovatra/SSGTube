@@ -1,99 +1,94 @@
-const videoPlayer = document.getElementById("videoPlayer");
-const videoTitle = document.getElementById("videoTitle");
-const videoList = document.getElementById("videoList");
-const artistContainer = document.getElementById("artistContainer");
+$(document).ready(function () {
 
-let videos = [];
-let currentIndex = 0;
-let videoItems = [];
+  let videos = [];
+  let currentIndex = 0;
+  let videoItems = [];
 
+  const $videoPlayer = $("#videoPlayer");
+  const $videoTitle = $("#videoTitle");
+  const $videoList = $("#videoList");
+  const $artistContainer = $("#artistContainer");
 
-fetch("videos.json")
-  .then(res => res.json())
-  .then(data => {
+  let isLoop = false;
+  let isShuffle = false;
+
+  // ✅ Load JSON (jQuery way)
+  $.getJSON("videos.json", function (data) {
     videos = data;
-    
 
-    let videoss = [];
-
-    $.getJSON("videos.json", function (data) {
-      videoss = data;
-    });
-
-
+    // ================= SEARCH =================
     $("#searchInput").on("keyup", function () {
       let keyword = $(this).val().toLowerCase();
-      let dropdown = $("#searchDropdown");
+      let $dropdown = $("#searchDropdown");
 
-      dropdown.empty();
+      $dropdown.empty();
 
       if (keyword === "") {
-        dropdown.hide();
+        $dropdown.hide();
         return;
       }
 
-      let results = videoss.filter(v => {
+      let results = videos.filter(v => {
         let titleMatch = v.title.toLowerCase().includes(keyword);
-
         let artistMatch = v.artist.some(a =>
           a.toLowerCase().includes(keyword)
         );
-
         return titleMatch || artistMatch;
       });
 
       if (results.length === 0) {
-        dropdown.html("<div class='search-item'>No results</div>");
-        dropdown.show();
+        $dropdown.html("<div class='search-item'>No results</div>");
+        $dropdown.show();
         return;
       }
 
-        results.slice(0, 6).forEach(v => {
-        let index = videoss.indexOf(v); // 🔑 get real index
+      results.slice(0, 6).forEach(v => {
+        let index = videos.indexOf(v);
         let artists = v.artist.join(", ");
 
         let item = `
-            <div class="search-item" data-index="${index}">
+          <div class="search-item" data-index="${index}">
             <img src="${v.thumbnail}">
             <div>
-                <div>${v.title}</div>
-                <small>${artists}</small>
+              <div>${v.title}</div>
+              <small>${artists}</small>
             </div>
-            </div>
+          </div>
         `;
 
-        dropdown.append(item);
-        });
+        $dropdown.append(item);
+      });
 
-      dropdown.show();
+      $dropdown.show();
     });
 
+    // click search result
     $(document).on("click", ".search-item", function () {
       let index = $(this).data("index");
       loadVideo(index);
-        $("#searchDropdown").hide();
+      $("#searchDropdown").hide();
     });
 
-
+    // hide dropdown
     $(document).click(function (e) {
       if (!$(e.target).closest(".search-box").length) {
         $("#searchDropdown").hide();
       }
     });
 
+    // ================= LOAD VIDEO =================
     function loadVideo(index) {
       currentIndex = index;
-
       localStorage.setItem("currentIndex", index);
 
       const video = videos[index];
 
-      videoPlayer.src = video.src;
-      videoTitle.innerText = video.title;
+      $videoPlayer.attr("src", video.src);
+      $videoTitle.text(video.title);
 
-      videoPlayer.play();
+      $videoPlayer[0].play();
 
-      // 🔥 MEDIA SESSION (THIS IS THE KEY)
+      // MEDIA SESSION (unchanged)
       if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
           title: video.title,
@@ -106,141 +101,163 @@ fetch("videos.json")
           ]
         });
 
-        // Optional controls
         navigator.mediaSession.setActionHandler("play", () => {
-          videoPlayer.play();
+          $videoPlayer[0].play();
         });
 
         navigator.mediaSession.setActionHandler("pause", () => {
-          videoPlayer.pause();
+          $videoPlayer[0].pause();
         });
 
         navigator.mediaSession.setActionHandler("nexttrack", () => {
-          let next = currentIndex + 1;
-          if (next >= videos.length) next = 0;
-          loadVideo(next);
+
+          if (isShuffle) {
+            let randomIndex = Math.floor(Math.random() * videos.length);
+            loadVideo(randomIndex);
+          } else {
+            let next = (currentIndex + 1) % videos.length;
+            loadVideo(next);
+          }
         });
 
         navigator.mediaSession.setActionHandler("previoustrack", () => {
-          let prev = currentIndex - 1;
-          if (prev < 0) prev = videos.length - 1;
+          let prev = (currentIndex - 1 + videos.length) % videos.length;
           loadVideo(prev);
         });
       }
-      // 🔥 HIGHLIGHT CURRENT VIDEO
-      videoItems.forEach(item => item.classList.remove("active"));
 
-      if (videoItems[index]) {
-        videoItems[index].classList.add("active");
+      // highlight active
+      $(".video-item").removeClass("active");
+      $(".video-item").eq(index).addClass("active");
 
-        // optional: auto scroll to active
-        // videoItems[index].scrollIntoView({
-        //   behavior: "smooth",
-        //   block: "center"
-        // });
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-      }
-      // 🔥 RENDER ARTISTS
-      artistContainer.innerHTML = "";
+      // scroll top
+      $("html, body").animate({ scrollTop: 0 }, "smooth");
 
-      const avatarWrapper = document.createElement("div");
-      avatarWrapper.className = "artist-avatars";
+      // render artists
+      $artistContainer.empty();
+
+      let avatarWrapper = $("<div>").addClass("artist-avatars");
 
       video.artist.forEach(name => {
-        const img = document.createElement("img");
-
-        // 👇 map artist name to image file
-        img.src = `artists/${name.toLowerCase()}.jpg`; // example: artists/Chetra.jpg
-
-        avatarWrapper.appendChild(img);
+        let img = $("<img>").attr(
+          "src",
+          `artists/${name.toLowerCase()}.jpg`
+        );
+        avatarWrapper.append(img);
       });
 
-      // names: A & B
-      const names = document.createElement("div");
-      names.className = "artist-names";
-      names.innerText = video.artist.join(" & ");
+      let names = $("<div>")
+        .addClass("artist-names")
+        .text(video.artist.join(" & "));
 
-      artistContainer.appendChild(avatarWrapper);
-      artistContainer.appendChild(names);
+      $artistContainer.append(avatarWrapper, names);
     }
 
-    // Render list
+    // ================= RENDER LIST =================
     videos.forEach((video, index) => {
-      const item = document.createElement("div");
-      item.className = "video-item";
-
-      item.innerHTML = `
-        <img src="${video.thumbnail}">
-        <div style="padding-left:15px" >
-          <h4 style="padding-bottom:5px;">${video.title}</h4>
-          <span>${(Array.isArray(video.artist) && video.artist.length > 0 ? video.artist.join(" & ") : "")}</span>
-          <span >${video.duration ?? "0:00"}</span>
+      let item = $(`
+        <div class="video-item">
+          <img src="${video.thumbnail}">
+          <div style="padding-left:15px">
+            <h4>${video.title}</h4>
+            <span>${video.artist.join(" & ")}</span>
+            <span>${video.duration ?? "0:00"}</span>
+          </div>
         </div>
-      `;
+      `);
 
-      item.onclick = () => {
+      item.on("click", function () {
         loadVideo(index);
-
-        // 🔥 remove ?index from URL
         window.history.replaceState({}, "", "player.html");
-      };
+      });
 
-      videoList.appendChild(item);
+      $videoList.append(item);
       videoItems.push(item);
     });
 
-    // 🔥 AUTO NEXT
-    videoPlayer.addEventListener("ended", () => {
-      let nextIndex = currentIndex + 1;
+    // ================= AUTO NEXT =================
+    $videoPlayer.on("ended", function () {
 
-      if (nextIndex >= videos.length) {
-        nextIndex = 0;
+      // 🔁 LOOP (repeat same song)
+      if (isLoop) {
+        loadVideo(currentIndex);
+        return;
       }
 
+      // 🔀 SHUFFLE (random song)
+      if (isShuffle) {
+        let randomIndex;
+
+        do {
+          randomIndex = Math.floor(Math.random() * videos.length);
+        } while (randomIndex === currentIndex && videos.length > 1);
+
+        loadVideo(randomIndex);
+        return;
+      }
+
+      // ▶ NORMAL NEXT
+      let nextIndex = (currentIndex + 1) % videos.length;
       loadVideo(nextIndex);
     });
 
-    // ✅ NEW LOGIC (URL + localStorage)
+    // ================= INIT =================
     const params = new URLSearchParams(window.location.search);
     const indexFromURL = parseInt(params.get("index"));
-    const savedIndexParsed = parseInt(localStorage.getItem("currentIndex"));
+    const savedIndex = parseInt(localStorage.getItem("currentIndex"));
 
-    let startIndex = 0;
+    let startIndex = !isNaN(indexFromURL)
+      ? indexFromURL
+      : !isNaN(savedIndex)
+        ? savedIndex
+        : 0;
 
-    if (!isNaN(indexFromURL)) {
-      startIndex = indexFromURL;
-    } else if (!isNaN(savedIndexParsed)) {
-      startIndex = savedIndexParsed;
-    }
-
-    // 🔥 LOAD HERE (IMPORTANT)
     loadVideo(startIndex);
   });
 
-const toggleBtn = document.getElementById("themeToggle");
-const logo = document.getElementById("logo");
-// Load saved theme
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  toggleBtn.innerHTML = '<i class="bi bi-brightness-high"></i>';
-  logo.src = "logo-dark.png";
-}
+  // ================= THEME =================
+  const $toggleBtn = $("#themeToggle");
+  const $logo = $("#logo");
 
-// Toggle theme
-toggleBtn.onclick = () => {
-  document.body.classList.toggle("dark");
-
-  if (document.body.classList.contains("dark")) {
-
-    localStorage.setItem("theme", "dark");
-    toggleBtn.innerHTML = '<i class="bi bi-brightness-high"></i>';
-    logo.src = "logo-dark.png";
-  } else {
-    localStorage.setItem("theme", "light");
-    toggleBtn.innerHTML = '<i class="bi bi-moon"></i>';
-    logo.src = "logo.png";
+  if (localStorage.getItem("theme") === "dark") {
+    $("body").addClass("dark");
+    $toggleBtn.html('<i class="bi bi-brightness-high"></i>');
+    $logo.attr("src", "logo-dark.png");
   }
-};
+
+  $toggleBtn.on("click", function () {
+    $("body").toggleClass("dark");
+
+    if ($("body").hasClass("dark")) {
+      localStorage.setItem("theme", "dark");
+      $toggleBtn.html('<i class="bi bi-brightness-high"></i>');
+      $logo.attr("src", "logo-dark.png");
+    } else {
+      localStorage.setItem("theme", "light");
+      $toggleBtn.html('<i class="bi bi-moon"></i>');
+      $logo.attr("src", "logo.png");
+    }
+  });
+
+  $("#loopBtn").on("click", function () {
+    isLoop = !isLoop;
+
+    if (isLoop) {
+      isShuffle = false;
+      $("#shuffleBtn").removeClass("active");
+    }
+
+    $(this).toggleClass("active", isLoop);
+  });
+
+  $("#shuffleBtn").on("click", function () {
+    isShuffle = !isShuffle;
+
+    if (isShuffle) {
+      isLoop = false;
+      $("#loopBtn").removeClass("active");
+    }
+
+    $(this).toggleClass("active", isShuffle);
+  });
+});
