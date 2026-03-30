@@ -10,26 +10,6 @@
     ]
   },
   {
-    "title": "72 Hours - Vichetra ft. Votey",
-    "src": "videos/video2.mp4",
-    "thumbnail": "videos/thumb2.jpg",
-    "duration": "4:24",
-    "artist": [
-      "Chetra",
-      "Votey"
-    ]
-  },
-  {
-    "title": "7 Days a week - Vichetra ft. Votey",
-    "src": "videos/video3.mp4",
-    "thumbnail": "videos/thumb3.jpg",
-    "duration": "4:27",
-    "artist": [
-      "Chetra",
-      "Votey"
-    ]
-  },
-  {
     "title": "អូនស្គាល់ចិត្តបង - Vichetra",
     "src": "videos/video4.mp4",
     "thumbnail": "videos/thumb4.jpg",
@@ -293,6 +273,35 @@
     "duration": "3:51",
     "artist": [
       "Huy"
+    ]
+  },
+  {
+    "title": "លាក់ទុក - TeHuy",
+    "src": "videos/video33.mp4",
+    "thumbnail": "videos/thumb33.jpg",
+    "duration": "3:52",
+    "artist": [
+      "Huy"
+    ]
+  },
+  {
+    "title": "Love Sick Blue - Chetra X SreyOun",
+    "src": "videos/video34.mp4",
+    "thumbnail": "videos/thumb34.jpg",
+    "duration": "4:51",
+    "artist": [
+      "Chetra",
+      "Sreyoun"
+    ]
+  },
+  {
+    "title": "Maybe - Chetra X SreyOun",
+    "src": "videos/video35.mp4",
+    "thumbnail": "videos/thumb35.jpg",
+    "duration": "4:50",
+    "artist": [
+      "Chetra",
+      "Sreyoun"
     ]
   }
 ]
